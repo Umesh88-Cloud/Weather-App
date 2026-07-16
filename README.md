@@ -34,4 +34,4 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 
 🚧 Under Development
 
-Day 1 Completed.
+Day 1 Completed.___
