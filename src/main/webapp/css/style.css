@@ -33,3 +33,32 @@ pre{
     text-align:left;
     white-space:pre-wrap;
 }
+
+.weather-card{
+
+    width:350px;
+
+    margin:30px auto;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    background:white;
+
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+
+    text-align:left;
+}
+
+.weather-card h2{
+
+    text-align:center;
+}
+
+.weather-card p{
+
+    font-size:18px;
+
+    margin:12px 0;
+}

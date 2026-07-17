@@ -8,7 +8,7 @@ import java.net.URL;
 public class WeatherService {
 
     // Replace this with your OpenWeather API Key later
-    private static final String API_KEY = "YOUR_API_KEY";
+    private static final String API_KEY = "6357d0bba373b68fef7863d539f351d3";
 
     public String getWeather(String city) {
 
@@ -27,6 +27,7 @@ public class WeatherService {
                     (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 
             BufferedReader reader =
                     new BufferedReader(
