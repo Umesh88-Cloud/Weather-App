@@ -34,46 +34,48 @@
 
     </form>
 
-    <%
-    if(request.getAttribute("city") != null){
-    %>
+    <% if(request.getAttribute("city") != null){ %>
 
-    <div class="weather-card">
+<div class="weather-card">
 
-        <h2>
-            📍 <%= request.getAttribute("city") %>
-        </h2>
+    <div class="weather-header">
 
-        <p>
-            🌡 Temperature :
-            <strong><%= request.getAttribute("temperature") %> °C</strong>
-        </p>
+    <img src="<%= request.getAttribute("iconUrl") %>"
+         alt="Weather Icon"
+         class="weather-icon">
 
-        <p>
-            💧 Humidity :
-            <strong><%= request.getAttribute("humidity") %> %</strong>
-        </p>
+    <h2>📍 <%= request.getAttribute("city") %></h2>
 
-        <p>
-            📈 Pressure :
-            <strong><%= request.getAttribute("pressure") %> hPa</strong>
-        </p>
+</div>
 
-        <p>
-            🌬 Wind Speed :
-            <strong><%= request.getAttribute("windSpeed") %> m/s</strong>
-        </p>
+    <p>
+        <span>🌡 Temperature</span>
+        <strong><%= request.getAttribute("temperature") %> °C</strong>
+    </p>
 
-        <p>
-            ☁ Weather :
-            <strong><%= request.getAttribute("description") %></strong>
-        </p>
+    <p>
+        <span>💧 Humidity</span>
+        <strong><%= request.getAttribute("humidity") %> %</strong>
+    </p>
 
-    </div>
+    <p>
+        <span>📈 Pressure</span>
+        <strong><%= request.getAttribute("pressure") %> hPa</strong>
+    </p>
 
-    <%
-    }
-    %>
+    <p>
+        <span>🌬 Wind Speed</span>
+        <strong><%= request.getAttribute("windSpeed") %> m/s</strong>
+    </p>
+
+    <p>
+        <span>☁ Weather</span>
+        <strong><%= request.getAttribute("description") %></strong>
+    </p>
+
+</div>
+
+<% } %>
 
 </div>
 

@@ -48,6 +48,8 @@ public class WeatherServlet extends HttpServlet {
         // Weather Description
         JSONArray weatherArray = json.getJSONArray("weather");
         String description = weatherArray.getJSONObject(0).getString("description");
+        String icon = weatherArray.getJSONObject(0).getString("icon");
+        String iconUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
 
         // Send data to JSP
         request.setAttribute("city", cityName);
@@ -56,6 +58,7 @@ public class WeatherServlet extends HttpServlet {
         request.setAttribute("pressure", pressure);
         request.setAttribute("windSpeed", windSpeed);
         request.setAttribute("description", description);
+        request.setAttribute("iconUrl", iconUrl);
 
         // Forward to index.jsp
         request.getRequestDispatcher("index.jsp")
