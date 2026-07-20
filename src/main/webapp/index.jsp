@@ -4,16 +4,41 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
 
-<meta charset="UTF-8">
-
-<title>Weather App</title>
-
-<link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<%
+    String weatherType = (String) request.getAttribute("mainWeather");
+    Double temp = (Double) request.getAttribute("temperature");
+
+    String bodyClass = "default-bg";
+
+    if(weatherType != null){
+
+        // If temperature is high, prefer sunny background
+        if(temp != null && temp >= 32){
+            bodyClass = "sunny";
+
+        } else if(weatherType.equalsIgnoreCase("Clear")){
+            bodyClass = "sunny";
+
+        } else if(weatherType.equalsIgnoreCase("Clouds")){
+            bodyClass = "cloudy";
+
+        } else if(weatherType.equalsIgnoreCase("Rain") ||
+                  weatherType.equalsIgnoreCase("Drizzle")){
+            bodyClass = "rainy";
+
+        } else if(weatherType.equalsIgnoreCase("Thunderstorm")){
+            bodyClass = "storm";
+        }
+    }
+%>
+
+<body class="<%= bodyClass %>">
 
 <div class="container">
 
@@ -24,7 +49,7 @@
         <input
             type="text"
             name="city"
-            placeholder="Enter City"
+            placeholder="Enter city name"
             value="<%= request.getParameter("city") != null ? request.getParameter("city") : "" %>"
             required>
 
@@ -34,51 +59,89 @@
 
     </form>
 
+    <!-- Loading Spinner -->
+    <div id="loading" class="loader" style="display:none;">
+        <div class="spinner"></div>
+        <p>Fetching weather data...</p>
+    </div>
+
+    <!-- Error Message -->
+    <% if(request.getAttribute("error") != null){ %>
+
+        <div class="error-box">
+            ❌ <%= request.getAttribute("error") %>
+        </div>
+
+    <% } %>
+
+    <!-- Weather Card -->
     <% if(request.getAttribute("city") != null){ %>
 
-<div class="weather-card">
+        <p class="weather-type">
+            Weather Type: <%= request.getAttribute("mainWeather") %>
+        </p>
 
-    <div class="weather-header">
+        <div class="weather-card">
 
-    <img src="<%= request.getAttribute("iconUrl") %>"
-         alt="Weather Icon"
-         class="weather-icon">
+            <div class="weather-header">
 
-    <h2>📍 <%= request.getAttribute("city") %></h2>
+                <img src="<%= request.getAttribute("iconUrl") %>"
+                     alt="Weather Icon"
+                     class="weather-icon">
+
+                <h2>📍 <%= request.getAttribute("city") %></h2>
+
+            </div>
+
+            <p>
+                <span>🌡 Temperature</span>
+                <strong><%= request.getAttribute("temperature") %> °C</strong>
+            </p>
+
+            <p>
+                <span>💧 Humidity</span>
+                <strong><%= request.getAttribute("humidity") %> %</strong>
+            </p>
+
+            <p>
+                <span>📈 Pressure</span>
+                <strong><%= request.getAttribute("pressure") %> hPa</strong>
+            </p>
+
+            <p>
+                <span>🌬 Wind Speed</span>
+                <strong><%= request.getAttribute("windSpeed") %> m/s</strong>
+            </p>
+
+            <p>
+                <span>☁ Weather</span>
+                <strong><%= request.getAttribute("description") %></strong>
+            </p>
+
+        </div>
+
+    <% } %>
 
 </div>
 
-    <p>
-        <span>🌡 Temperature</span>
-        <strong><%= request.getAttribute("temperature") %> °C</strong>
-    </p>
+<% if(request.getAttribute("city") == null){ %>
+
+<footer class="footer">
 
     <p>
-        <span>💧 Humidity</span>
-        <strong><%= request.getAttribute("humidity") %> %</strong>
+        Developed by <strong>Umesh Rupnar</strong>
     </p>
 
-    <p>
-        <span>📈 Pressure</span>
-        <strong><%= request.getAttribute("pressure") %> hPa</strong>
-    </p>
+    <a href="https://github.com/Umesh88-Cloud"
+       target="_blank">
+        🔗 View on GitHub
+    </a>
 
-    <p>
-        <span>🌬 Wind Speed</span>
-        <strong><%= request.getAttribute("windSpeed") %> m/s</strong>
-    </p>
-
-    <p>
-        <span>☁ Weather</span>
-        <strong><%= request.getAttribute("description") %></strong>
-    </p>
-
-</div>
+</footer>
 
 <% } %>
 
-</div>
+<script src="js/script.js"></script>
 
 </body>
-
 </html>

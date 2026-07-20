@@ -1,15 +1,25 @@
-async function getWeather() {
+const form = document.querySelector("form");
+const loader = document.getElementById("loading");
+const weatherCard = document.querySelector(".weather-card");
 
-    const city = document.getElementById("city").value;
-
-    if (city === "") {
-        alert("Please enter a city.");
-        return;
+// Hide loader when page finishes loading
+window.addEventListener("load", () => {
+    if(loader){
+        loader.style.display = "none";
     }
+});
 
-    const response = await fetch("weather?city=" + encodeURIComponent(city));
+// Show loader when form is submitted
+if(form && loader){
 
-    const data = await response.text();
+    form.addEventListener("submit", () => {
 
-    document.getElementById("result").textContent = data;
+        // Show loading spinner + text
+        loader.style.display = "block";
+
+        // Hide old weather card while loading
+        if(weatherCard){
+            weatherCard.style.display = "none";
+        }
+    });
 }

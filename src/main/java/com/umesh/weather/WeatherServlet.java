@@ -26,11 +26,40 @@ public class WeatherServlet extends HttpServlet {
         // Get city from form
         String city = request.getParameter("city");
 
-        // Get weather JSON from API
+        // Fetch weather data
         String weatherData = service.getWeather(city);
 
-        // Parse JSON
+        
+        // ===== CHECK 1: API fetch error =====
+    if(weatherData.contains("\"error\"")) {
+
+        request.setAttribute(
+             "error",
+            "Unable to fetch weather data. Please try again."
+    );
+
+        request.getRequestDispatcher("index.jsp")
+             .forward(request, response);
+
+        return;
+    }
+
+        // Convert JSON string to object
         JSONObject json = new JSONObject(weatherData);
+
+        // ===== CHECK 2: Invalid city =====
+        if(json.has("cod") && json.getInt("cod") != 200) {
+
+            request.setAttribute(
+                "error",
+                "City not found. Please enter a valid city name."
+            );
+
+            request.getRequestDispatcher("index.jsp")
+                   .forward(request, response);
+
+            return;
+        }
 
         // City Name
         String cityName = json.getString("name");
@@ -45,11 +74,25 @@ public class WeatherServlet extends HttpServlet {
         JSONObject wind = json.getJSONObject("wind");
         double windSpeed = wind.getDouble("speed");
 
-        // Weather Description
+        // Weather Data
         JSONArray weatherArray = json.getJSONArray("weather");
-        String description = weatherArray.getJSONObject(0).getString("description");
-        String icon = weatherArray.getJSONObject(0).getString("icon");
-        String iconUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+
+        String description =
+                weatherArray.getJSONObject(0)
+                            .getString("description");
+
+        String mainWeather =
+                weatherArray.getJSONObject(0)
+                            .getString("main");
+
+        String icon =
+                weatherArray.getJSONObject(0)
+                            .getString("icon");
+
+        String iconUrl =
+                "https://openweathermap.org/img/wn/"
+                + icon
+                + "@2x.png";
 
         // Send data to JSP
         request.setAttribute("city", cityName);
@@ -59,8 +102,9 @@ public class WeatherServlet extends HttpServlet {
         request.setAttribute("windSpeed", windSpeed);
         request.setAttribute("description", description);
         request.setAttribute("iconUrl", iconUrl);
+        request.setAttribute("mainWeather", mainWeather);
 
-        // Forward to index.jsp
+        // Forward to JSP
         request.getRequestDispatcher("index.jsp")
                .forward(request, response);
     }
