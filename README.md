@@ -15,6 +15,10 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Display Wind Speed
 * Display Weather Description
 * Display real OpenWeather weather icons
+* Dynamic background based on weather conditions
+* Loading spinner while fetching weather data
+* Friendly error messages for invalid cities
+* Smooth animations and hover effects
 * Responsive and modern UI
 
 ---
@@ -95,15 +99,29 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Made the application responsive for mobile devices
 * Enhanced overall user experience
 
+### ✅ Day 5 Completed
+
+* Added dynamic background based on weather conditions
+* Implemented temperature-based sunny background
+* Added loading spinner animation
+* Displayed “Fetching weather data...” while searching
+* Hide previous weather card during loading
+* Added friendly error messages for invalid cities
+* Added footer with developer information and GitHub link
+* Displayed footer only on the home page
+* Added smooth hover animations and UI transitions
+* Improved overall UI polish and user experience
+
 ---
 
-## 🎯 Next Goal (Day 5)
+## 🎯 Next Goal (Day 6)
 
-* Add dynamic background based on weather
-* Add loading animation while fetching data
-* Improve error handling for invalid cities
-* Add Enter key support for search
-* Add footer with developer information
+* Add “Use My Location” button
+* Get current latitude and longitude using browser Geolocation API
+* Fetch weather using coordinates
+* Display current location weather automatically
+* Handle location permission errors gracefully
+* Improve mobile experience for location access
 
 ---
 
