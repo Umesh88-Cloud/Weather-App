@@ -55,7 +55,6 @@ body {
     padding: 30px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     text-align: center;
-
     animation: floatIn 0.8s ease;
 }
 
@@ -75,6 +74,16 @@ form {
     display: flex;
     gap: 12px;
     margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+form input{
+    flex: 1 1 100%;
+}
+
+form button{
+    flex: 1;
+    min-width: 160px;
 }
 
 input {
@@ -84,7 +93,6 @@ input {
     border-radius: 12px;
     font-size: 16px;
     outline: none;
-
     transition: all 0.3s ease;
 }
 
@@ -116,6 +124,32 @@ button:active{
 }
 
 /* =========================
+   SEARCH BUTTON
+========================= */
+
+.search-btn{
+    background: #2563eb;
+    color: white;
+}
+
+.search-btn:hover{
+    background: #1d4ed8;
+}
+
+/* =========================
+   LOCATION BUTTON
+========================= */
+
+.location-btn{
+    background: #16a34a;
+    color: white;
+}
+
+.location-btn:hover{
+    background: #15803d;
+}
+
+/* =========================
    WEATHER TYPE TEXT
 ========================= */
 .weather-type {
@@ -134,11 +168,13 @@ button:active{
     border-radius: 18px;
     padding: 22px;
     text-align: left;
-    animation: fadeIn 0.5s ease;
 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: weatherAppear 0.7s ease;
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                opacity 0.4s ease;
 }
-
 .weather-card:hover{
     transform: translateY(-6px);
     box-shadow: 0 14px 30px rgba(0,0,0,0.22);
@@ -209,8 +245,53 @@ button:active{
 }
 
 /* =========================
+   ERROR MESSAGE BOX
+========================= */
+
+.error-box{
+    background: rgba(255, 255, 255, 0.95);
+    color: #dc2626;
+    padding: 14px;
+    border-radius: 12px;
+    margin: 18px 0;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.footer a{
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+}
+
+.footer a:hover{
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+
+
+/* =========================
    ANIMATIONS
 ========================= */
+
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -220,7 +301,7 @@ button:active{
     }
 }
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(12px);
@@ -229,11 +310,40 @@ button:active{
         opacity: 1;
         transform: translateY(0);
     }
+} */
+
+@keyframes floatIn{
+    from{
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================
+   WEATHER CARD APPEAR ANIMATION
+========================= */
+
+@keyframes weatherAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* =========================
    MOBILE RESPONSIVE
 ========================= */
+
 @media (max-width: 600px) {
 
     .container {
@@ -252,6 +362,15 @@ button:active{
         width: 100%;
     }
 
+    .recent-list{
+        gap:12px;
+    }
+
+    .recent-item{
+        min-width:100px;
+        padding:10px 18px;
+    }
+
     .weather-card p {
         flex-direction: column;
         gap: 4px;
@@ -259,63 +378,73 @@ button:active{
 }
 
 
-/* =========================
-   ERROR MESSAGE BOX
-========================= */
+/* =====================================
+   FINAL RECENT SEARCH STYLE
+===================================== */
 
-.error-box{
-    background: rgba(255, 255, 255, 0.95);
-    color: #dc2626;
-    padding: 14px;
-    border-radius: 12px;
-    margin: 18px 0;
-    font-weight: bold;
+.recent-searches{
+    margin: 22px 0 26px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer{
-    position: fixed;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    text-align: center;
-    color: white;
-
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.footer a{
+.recent-searches h3{
     color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-
-    transition: opacity 0.3s ease;
+    margin-bottom: 14px;
+    font-size: 1.15rem;
+    font-weight: 700;
 }
 
-.footer a:hover{
-    opacity: 0.8;
-    text-decoration: underline;
+/* Keep all buttons in one line */
+.recent-searches .recent-list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: nowrap;      /* IMPORTANT */
+    overflow-x: auto;       /* scroll on small screens */
+    padding: 6px 4px;
+}
+
+/* Hide scrollbar */
+.recent-searches .recent-list::-webkit-scrollbar{
+    display: none;
+}
+
+/* Button style */
+.recent-searches .recent-list button.recent-item{
+    background: rgba(255,255,255,0.14);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    padding: 10px 22px;
+    min-width: auto;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.16);
+    transition: all 0.25s ease;
+    flex: 0 0 auto;
+}
+
+.recent-searches .recent-list button.recent-item:hover{
+    background: #2563eb;
+    border-color: #60a5fa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(37,99,235,0.35);
 }
 
 /* =========================
-   FLOATING CONTAINER
+   CURRENT LOCATION BADGE
 ========================= */
 
-@keyframes floatIn{
-    from{
-        opacity: 0;
-        transform: translateY(30px) scale(0.96);
-    }
-    to{
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.location-badge{
+    display: inline-block;
+    background: #16a34a;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(22,163,74,0.35);
 }

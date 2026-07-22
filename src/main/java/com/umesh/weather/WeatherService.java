@@ -7,19 +7,47 @@ import java.net.URL;
 
 public class WeatherService {
 
-    // Replace this with your OpenWeather API Key later
+    // OpenWeather API Key
     private static final String API_KEY = "6357d0bba373b68fef7863d539f351d3";
 
+    
+    // GET WEATHER BY CITY
+    
     public String getWeather(String city) {
 
-        try {
+        String urlString =
+                "https://api.openweathermap.org/data/2.5/weather?q="
+                + city
+                + "&appid="
+                + API_KEY
+                + "&units=metric";
 
-            String urlString =
-                    "https://api.openweathermap.org/data/2.5/weather?q="
-                    + city
-                    + "&appid="
-                    + API_KEY
-                    + "&units=metric";
+        return fetchWeather(urlString);
+    }
+
+  
+    // GET WEATHER BY COORDINATES
+    
+    public String getWeatherByCoordinates(String lat, String lon) {
+
+        String urlString =
+                "https://api.openweathermap.org/data/2.5/weather?lat="
+                + lat
+                + "&lon="
+                + lon
+                + "&appid="
+                + API_KEY
+                + "&units=metric";
+
+        return fetchWeather(urlString);
+    }
+
+    
+    // COMMON API CALL METHOD
+  
+    private String fetchWeather(String urlString) {
+
+        try {
 
             URL url = new URL(urlString);
 
@@ -29,21 +57,21 @@ public class WeatherService {
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 
-     BufferedReader reader;
-
-    if(connection.getResponseCode() >= 200 &&
-            connection.getResponseCode() < 300){
+            BufferedReader reader;
 
             // Success response
-            reader = new BufferedReader(
-            new InputStreamReader(connection.getInputStream()));
+            if (connection.getResponseCode() >= 200
+                    && connection.getResponseCode() < 300) {
 
-    } else {
+                reader = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream()));
 
-            // Error response (like invalid city)
-            reader = new BufferedReader(
-            new InputStreamReader(connection.getErrorStream()));
-}
+            } else {
+
+                // Error response (invalid city, etc.)
+                reader = new BufferedReader(
+                        new InputStreamReader(connection.getErrorStream()));
+            }
 
             StringBuilder response = new StringBuilder();
 
@@ -58,10 +86,10 @@ public class WeatherService {
             return response.toString();
 
         } catch (Exception e) {
+
             e.printStackTrace();
-            return "{\"error\":\"Unable to fetch weather\"}";
+
+            return "error";
         }
-
     }
-
 }

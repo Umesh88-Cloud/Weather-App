@@ -20,6 +20,12 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Friendly error messages for invalid cities
 * Smooth animations and hover effects
 * Responsive and modern UI
+* 📍 Use My Location button (Geolocation API)
+* Fetch weather using latitude and longitude
+* Display current location badge
+* Recent searches saved in browser localStorage
+* Recent search buttons displayed in a single line
+* Smooth weather card appear animation
 
 ---
 
@@ -112,16 +118,33 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Added smooth hover animations and UI transitions
 * Improved overall UI polish and user experience
 
+### ✅ Day 6 Completed
+
+* Added 🔍 Search button with icon
+* Added 📍 Use My Location button with green theme
+* Implemented browser Geolocation API
+* Requested location permission from the user
+* Captured current latitude and longitude
+* Sent coordinates to `WeatherServlet`
+* Fetched weather using coordinates
+* Added `getWeatherByCoordinates()` in `WeatherService`
+* Displayed 📍 Current Location badge on the weather card
+* Saved recent searches using localStorage
+* Displayed recent search buttons in a single horizontal line
+* Added smooth weather card appear animation
+* Improved mobile scrolling for recent searches
+* Refactored API handling for cleaner code structure
+
 ---
 
-## 🎯 Next Goal (Day 6)
+## 🎯 Next Goal (Day 7)
 
-* Add “Use My Location” button
-* Get current latitude and longitude using browser Geolocation API
-* Fetch weather using coordinates
-* Display current location weather automatically
-* Handle location permission errors gracefully
-* Improve mobile experience for location access
+* Add 5-day weather forecast
+* Display forecast cards with date, temperature, and weather icon
+* Add horizontal scrolling forecast section
+* Improve weather data formatting
+* Add sunrise and sunset information
+* Enhance UI with forecast animations
 
 ---
 

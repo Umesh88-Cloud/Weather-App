@@ -23,36 +23,47 @@ public class WeatherServlet extends HttpServlet {
 
         System.out.println("WeatherServlet Called");
 
-        // Get city from form
+        // Get city or coordinates
         String city = request.getParameter("city");
+        String lat = request.getParameter("lat");
+        String lon = request.getParameter("lon");
 
-        // Fetch weather data
-        String weatherData = service.getWeather(city);
+        String weatherData;
 
-        
+        // If latitude and longitude are available
+        if (lat != null && !lat.isEmpty()
+                && lon != null && !lon.isEmpty()) {
+
+            weatherData = service.getWeatherByCoordinates(lat, lon);
+
+        } else {
+
+            weatherData = service.getWeather(city);
+        }
+
         // ===== CHECK 1: API fetch error =====
-    if(weatherData.contains("\"error\"")) {
+        if (weatherData.contains("error")) {
 
-        request.setAttribute(
-             "error",
-            "Unable to fetch weather data. Please try again."
-    );
+            request.setAttribute(
+                    "error",
+                    "Unable to fetch weather data. Please try again."
+            );
 
-        request.getRequestDispatcher("index.jsp")
-             .forward(request, response);
+            request.getRequestDispatcher("index.jsp")
+                   .forward(request, response);
 
-        return;
-    }
+            return;
+        }
 
         // Convert JSON string to object
         JSONObject json = new JSONObject(weatherData);
 
         // ===== CHECK 2: Invalid city =====
-        if(json.has("cod") && json.getInt("cod") != 200) {
+        if (json.has("cod") && json.getInt("cod") != 200) {
 
             request.setAttribute(
-                "error",
-                "City not found. Please enter a valid city name."
+                    "error",
+                    "City not found. Please enter a valid city name."
             );
 
             request.getRequestDispatcher("index.jsp")
@@ -103,6 +114,11 @@ public class WeatherServlet extends HttpServlet {
         request.setAttribute("description", description);
         request.setAttribute("iconUrl", iconUrl);
         request.setAttribute("mainWeather", mainWeather);
+
+        // Show current location badge if coordinates were used
+        if (lat != null && !lat.isEmpty()) {
+            request.setAttribute("isCurrentLocation", true);
+        }
 
         // Forward to JSP
         request.getRequestDispatcher("index.jsp")

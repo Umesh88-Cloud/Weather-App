@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>Weather App</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 
 <%
@@ -53,17 +53,40 @@
             value="<%= request.getParameter("city") != null ? request.getParameter("city") : "" %>"
             required>
 
-        <button type="submit">
-            Search
+        <button type="submit" class="search-btn">
+            🔍 Search
         </button>
 
+        <button type="button"
+            id="locationBtn"
+            class="location-btn">
+               📍 Use My Location
+        </button>
+
+        <input type="hidden" name="lat" id="lat">
+        <input type="hidden" name="lon" id="lon">
+
     </form>
+
+
+    <!--RECENT SEARCHES-->
+    <div id="recentSearches" class="recent-searches">
+
+        <h3>🕘 Recent Searches</h3>
+
+        <div id="recentList" class="recent-list"></div>
+
+    </div>
+
+
 
     <!-- Loading Spinner -->
     <div id="loading" class="loader" style="display:none;">
         <div class="spinner"></div>
         <p>Fetching weather data...</p>
     </div>
+
+
 
     <!-- Error Message -->
     <% if(request.getAttribute("error") != null){ %>
@@ -74,6 +97,7 @@
 
     <% } %>
 
+
     <!-- Weather Card -->
     <% if(request.getAttribute("city") != null){ %>
 
@@ -82,6 +106,14 @@
         </p>
 
         <div class="weather-card">
+
+            <% if(request.getAttribute("isCurrentLocation") != null){ %>
+
+                <div class="location-badge">
+                    📍 Current Location
+                </div>
+
+            <% } %>
 
             <div class="weather-header">
 
@@ -124,6 +156,7 @@
 
 </div>
 
+
 <% if(request.getAttribute("city") == null){ %>
 
 <footer class="footer">
@@ -141,7 +174,7 @@
 
 <% } %>
 
-<script src="js/script.js"></script>
+<script src="<%= request.getContextPath() %>/js/script.js?v=3"></script>
 
 </body>
 </html>
