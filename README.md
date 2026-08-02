@@ -24,8 +24,14 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Fetch weather using latitude and longitude
 * Display current location badge
 * Recent searches saved in browser localStorage
-* Recent search buttons displayed in a single line
+* Recent search buttons displayed in a single horizontal line
 * Smooth weather card appear animation
+* 🌤 5-Day Weather Forecast
+* Forecast cards with weather icons
+* Forecast temperature display
+* Forecast date formatting (DD-MM-YYYY)
+* Horizontal forecast card layout
+* Clean and responsive forecast UI
 
 ---
 
@@ -59,6 +65,8 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Installed Apache Tomcat
 * Created basic Maven project
 
+---
+
 ### ✅ Day 2 Completed
 
 * Created Maven Web Application structure
@@ -73,6 +81,8 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Deployed application on Apache Tomcat
 * Successfully ran the application on localhost
 
+---
+
 ### ✅ Day 3 Completed
 
 * Created OpenWeather account
@@ -82,7 +92,6 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Added JSON library (`org.json`) dependency
 * Parsed JSON response in `WeatherServlet`
 * Extracted:
-
   * City Name
   * Temperature
   * Humidity
@@ -91,6 +100,8 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
   * Weather Description
 * Displayed live weather information on the webpage
 * Tested application successfully on Apache Tomcat
+
+---
 
 ### ✅ Day 4 Completed
 
@@ -105,18 +116,22 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 * Made the application responsive for mobile devices
 * Enhanced overall user experience
 
+---
+
 ### ✅ Day 5 Completed
 
 * Added dynamic background based on weather conditions
 * Implemented temperature-based sunny background
 * Added loading spinner animation
-* Displayed “Fetching weather data...” while searching
-* Hide previous weather card during loading
+* Displayed "Fetching weather data..." while searching
+* Hid previous weather card during loading
 * Added friendly error messages for invalid cities
 * Added footer with developer information and GitHub link
 * Displayed footer only on the home page
 * Added smooth hover animations and UI transitions
 * Improved overall UI polish and user experience
+
+---
 
 ### ✅ Day 6 Completed
 
@@ -137,14 +152,32 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 
 ---
 
-## 🎯 Next Goal (Day 7)
+### ✅ Day 7 Completed
 
-* Add 5-day weather forecast
-* Display forecast cards with date, temperature, and weather icon
-* Add horizontal scrolling forecast section
-* Improve weather data formatting
-* Add sunrise and sunset information
-* Enhance UI with forecast animations
+* Added 5-Day Weather Forecast feature
+* Integrated OpenWeather 5-Day Forecast API
+* Added `getForecast()` method in `WeatherService`
+* Parsed forecast JSON in `WeatherServlet`
+* Displayed forecast cards below current weather
+* Added weather icons for each forecast day
+* Displayed forecast temperature
+* Changed forecast date format from `YYYY-MM-DD` to `DD-MM-YYYY`
+* Created responsive horizontal forecast layout
+* Added forecast card hover effects
+* Improved overall forecast UI and user experience
+* Refactored code for better readability and maintainability
+
+---
+
+## 🎯 Next Goal (Day 8)
+
+* Add Air Quality Index (AQI)
+* Display AQI level (Good, Moderate, Poor, etc.)
+* Show visibility information
+* Show UV Index
+* Display "Feels Like" temperature
+* Add sunrise and sunset icons with better UI
+* Improve weather animations
 
 ---
 

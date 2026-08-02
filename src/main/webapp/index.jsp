@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>Weather App</title>
 
-    <link rel="stylesheet" href="css/style.css?v=6">
+    <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 
 <%
@@ -18,7 +18,6 @@
 
     if(weatherType != null){
 
-        // If temperature is high, prefer sunny background
         if(temp != null && temp >= 32){
             bodyClass = "sunny";
 
@@ -58,9 +57,9 @@
         </button>
 
         <button type="button"
-            id="locationBtn"
-            class="location-btn">
-               📍 Use My Location
+                id="locationBtn"
+                class="location-btn">
+            📍 Use My Location
         </button>
 
         <input type="hidden" name="lat" id="lat">
@@ -69,7 +68,8 @@
     </form>
 
 
-    <!--RECENT SEARCHES-->
+    <!--RECENT SEARCHES -->
+
     <div id="recentSearches" class="recent-searches">
 
         <h3>🕘 Recent Searches</h3>
@@ -79,8 +79,8 @@
     </div>
 
 
+    <!--LOADING SPINNER -->
 
-    <!-- Loading Spinner -->
     <div id="loading" class="loader" style="display:none;">
         <div class="spinner"></div>
         <p>Fetching weather data...</p>
@@ -88,7 +88,8 @@
 
 
 
-    <!-- Error Message -->
+    <!-- ERROR MESSAGE-->
+
     <% if(request.getAttribute("error") != null){ %>
 
         <div class="error-box">
@@ -98,7 +99,8 @@
     <% } %>
 
 
-    <!-- Weather Card -->
+    <!--WEATHER CARD-->
+
     <% if(request.getAttribute("city") != null){ %>
 
         <p class="weather-type">
@@ -146,16 +148,115 @@
             </p>
 
             <p>
+                <span>🌅 Sunrise</span>
+                <strong><%= request.getAttribute("sunrise") %></strong>
+            </p>
+
+            <p>
+                <span>🌇 Sunset</span>
+                <strong><%= request.getAttribute("sunset") %></strong>
+            </p>
+
+            <p>
                 <span>☁ Weather</span>
                 <strong><%= request.getAttribute("description") %></strong>
             </p>
 
         </div>
 
+
+
+        <!-- 5-DAY FORECAST-->
+
+        <% if(request.getAttribute("forecastList") != null){ %>
+
+            <div class="forecast-section">
+
+                <h3>📅 5-Day Forecast</h3>
+
+                <div class="forecast-container">
+
+                    <%
+                        org.json.JSONArray forecastList =
+                            (org.json.JSONArray) request.getAttribute("forecastList");
+
+                        int count = 0;
+
+                        for(int i = 0; i < forecastList.length() && count < 5; i++){
+
+                            org.json.JSONObject item =
+                                forecastList.getJSONObject(i);
+
+                            String dateTime = item.getString("dt_txt");
+
+                            // Pick only 12:00 PM forecast
+                            if(dateTime.contains("12:00:00")){
+
+                                org.json.JSONObject mainForecast =
+                                    item.getJSONObject("main");
+
+                                double tempForecast =
+                                    mainForecast.getDouble("temp");
+
+                                org.json.JSONObject weatherForecast =
+                                    item.getJSONArray("weather").getJSONObject(0);
+
+                                String iconForecast =
+                                    weatherForecast.getString("icon");
+
+                                String descForecast =
+                                    weatherForecast.getString("description");
+
+                                String iconUrlForecast =
+                                    "https://openweathermap.org/img/wn/"
+                                    + iconForecast
+                                    + "@2x.png";
+
+                                // Convert 2026-07-24 → 24-07-2026
+                                String[] parts = dateTime.substring(0, 10).split("-");
+
+                                String dateOnly = parts[2] + "-" + parts[1] + "-" + parts[0];
+
+                                count++;
+                    %>
+
+                    <div class="forecast-card">
+
+                        <p class="forecast-date">
+                            <%= dateOnly %>
+                        </p>
+
+                        <img src="<%= iconUrlForecast %>"
+                             alt="Forecast Icon"
+                             class="forecast-icon">
+
+                        <p class="forecast-temp">
+                            <%= String.format("%.1f", tempForecast) %>°C
+                        </p>
+
+                        <p class="forecast-desc">
+                            <%= descForecast %>
+                        </p>
+
+                    </div>
+
+                    <%
+                            }
+                        }
+                    %>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
     <% } %>
 
 </div>
 
+
+<!--FOOTER-->
 
 <% if(request.getAttribute("city") == null){ %>
 

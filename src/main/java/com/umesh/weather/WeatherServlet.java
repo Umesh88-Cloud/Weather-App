@@ -18,7 +18,7 @@ public class WeatherServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
+            HttpServletResponse response)
             throws ServletException, IOException {
 
         System.out.println("WeatherServlet Called");
@@ -29,16 +29,22 @@ public class WeatherServlet extends HttpServlet {
         String lon = request.getParameter("lon");
 
         String weatherData;
+        String forecastData = null;
 
         // If latitude and longitude are available
         if (lat != null && !lat.isEmpty()
                 && lon != null && !lon.isEmpty()) {
 
+            // Weather by coordinates
             weatherData = service.getWeatherByCoordinates(lat, lon);
 
         } else {
 
+            // Weather by city
             weatherData = service.getWeather(city);
+
+            // Forecast by city
+            forecastData = service.getForecast(city);
         }
 
         // ===== CHECK 1: API fetch error =====
@@ -46,11 +52,10 @@ public class WeatherServlet extends HttpServlet {
 
             request.setAttribute(
                     "error",
-                    "Unable to fetch weather data. Please try again."
-            );
+                    "Unable to fetch weather data. Please try again.");
 
             request.getRequestDispatcher("index.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
 
             return;
         }
@@ -63,11 +68,10 @@ public class WeatherServlet extends HttpServlet {
 
             request.setAttribute(
                     "error",
-                    "City not found. Please enter a valid city name."
-            );
+                    "City not found. Please enter a valid city name.");
 
             request.getRequestDispatcher("index.jsp")
-                   .forward(request, response);
+                    .forward(request, response);
 
             return;
         }
@@ -85,23 +89,31 @@ public class WeatherServlet extends HttpServlet {
         JSONObject wind = json.getJSONObject("wind");
         double windSpeed = wind.getDouble("speed");
 
+        // Sunrise & Sunset
+        JSONObject sys = json.getJSONObject("sys");
+
+        long sunrise = sys.getLong("sunrise");
+        long sunset = sys.getLong("sunset");
+
+        java.text.SimpleDateFormat timeFormat = new java.text.SimpleDateFormat("hh:mm a");
+
+        String sunriseTime = timeFormat.format(new java.util.Date(sunrise * 1000));
+
+        String sunsetTime = timeFormat.format(new java.util.Date(sunset * 1000));
+
         // Weather Data
         JSONArray weatherArray = json.getJSONArray("weather");
 
-        String description =
-                weatherArray.getJSONObject(0)
-                            .getString("description");
+        String description = weatherArray.getJSONObject(0)
+                .getString("description");
 
-        String mainWeather =
-                weatherArray.getJSONObject(0)
-                            .getString("main");
+        String mainWeather = weatherArray.getJSONObject(0)
+                .getString("main");
 
-        String icon =
-                weatherArray.getJSONObject(0)
-                            .getString("icon");
+        String icon = weatherArray.getJSONObject(0)
+                .getString("icon");
 
-        String iconUrl =
-                "https://openweathermap.org/img/wn/"
+        String iconUrl = "https://openweathermap.org/img/wn/"
                 + icon
                 + "@2x.png";
 
@@ -111,9 +123,21 @@ public class WeatherServlet extends HttpServlet {
         request.setAttribute("humidity", humidity);
         request.setAttribute("pressure", pressure);
         request.setAttribute("windSpeed", windSpeed);
+        request.setAttribute("sunrise", sunriseTime);
+        request.setAttribute("sunset", sunsetTime);
         request.setAttribute("description", description);
         request.setAttribute("iconUrl", iconUrl);
         request.setAttribute("mainWeather", mainWeather);
+
+        // ===== FORECAST DATA =====
+        if (forecastData != null && !forecastData.equals("error")) {
+
+            JSONObject forecastJson = new JSONObject(forecastData);
+
+            JSONArray forecastList = forecastJson.getJSONArray("list");
+
+            request.setAttribute("forecastList", forecastList);
+        }
 
         // Show current location badge if coordinates were used
         if (lat != null && !lat.isEmpty()) {
@@ -122,6 +146,6 @@ public class WeatherServlet extends HttpServlet {
 
         // Forward to JSP
         request.getRequestDispatcher("index.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 }

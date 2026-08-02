@@ -448,3 +448,102 @@ button:active{
     margin-bottom: 14px;
     box-shadow: 0 4px 12px rgba(22,163,74,0.35);
 }
+
+/* =====================================
+   FORECAST SECTION
+===================================== */
+
+.forecast-section{
+    margin-top: 28px;
+    text-align: left;
+}
+
+.forecast-section h3{
+    color: #ffffff;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* =====================================
+   FORECAST CONTAINER
+===================================== */
+
+.forecast-container{
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 8px 4px 14px;
+    scroll-behavior: smooth;
+}
+
+/* Hide scrollbar (Chrome, Edge) */
+.forecast-container::-webkit-scrollbar{
+    height: 8px;
+}
+
+.forecast-container::-webkit-scrollbar-thumb{
+    background: rgba(255,255,255,0.35);
+    border-radius: 999px;
+}
+
+/* =====================================
+   FORECAST CARD
+===================================== */
+
+.forecast-card{
+    min-width: 130px;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 18px;
+    padding: 16px 14px;
+    text-align: center;
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.16);
+
+    transition: transform 0.28s ease,
+                box-shadow 0.28s ease,
+                background 0.28s ease;
+
+    flex: 0 0 auto;
+}
+
+/* Hover effect */
+.forecast-card:hover{
+    transform: translateY(-6px);
+    background: rgba(255,255,255,0.22);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.24);
+}
+
+/* Date */
+.forecast-date{
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+/* Weather icon */
+.forecast-icon{
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 8px;
+}
+
+/* Temperature */
+.forecast-temp{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #ffffff;
+}
+
+/* Description */
+.forecast-desc{
+    font-size: 13px;
+    text-transform: capitalize;
+    line-height: 1.3;
+    color: rgba(255,255,255,0.92);
+}

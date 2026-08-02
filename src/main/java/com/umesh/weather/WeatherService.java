@@ -43,6 +43,21 @@ public class WeatherService {
     }
 
     
+    // GET 5-DAY FORECAST BY CITY
+
+    public String getForecast(String city) {
+
+            String urlString =
+                "https://api.openweathermap.org/data/2.5/forecast?q="
+                + city
+                + "&appid="
+                + API_KEY
+                + "&units=metric";
+
+        return fetchWeather(urlString);
+}
+
+    
     // COMMON API CALL METHOD
   
     private String fetchWeather(String urlString) {
