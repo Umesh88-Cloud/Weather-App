@@ -169,7 +169,7 @@ A Java Servlet & JSP based Weather Application that fetches real-time weather in
 
 ---
 
-## 🎯 Next Goal (Day 8)
+## 🎯 (Day 8)
 
 * Add Air Quality Index (AQI)
 * Display AQI level (Good, Moderate, Poor, etc.)
